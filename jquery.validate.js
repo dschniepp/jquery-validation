@@ -213,9 +213,10 @@ $.extend($.validator, {
 		messages: {},
 		groups: {},
 		rules: {},
-		errorClass: "error",
+		errorClass: "error",		
 		validClass: "valid",
 		errorElement: "label",
+		errorPlacement: "after",		
 		focusInvalid: true,
 		errorContainer: $([]),
 		errorLabelContainer: $([]),
@@ -692,10 +693,12 @@ $.extend($.validator, {
 					label = label.hide().show().wrap("<" + this.settings.wrapper + "/>").parent();
 				}
 				if ( !this.labelContainer.append(label).length ) {
-					if ( this.settings.errorPlacement ) {
-						this.settings.errorPlacement(label, $(element) );
-					} else {
+					if ( this.settings.errorPlacement === "after") {
 						label.insertAfter(element);
+					} else if ( this.settings.errorPlacement === "before") {
+						label.insertBefore(element);
+					} else {
+						this.settings.errorPlacement(label, $(element) );
 					}
 				}
 			}
